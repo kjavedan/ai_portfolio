@@ -7,9 +7,9 @@ import { usePathname } from 'next/navigation';
 import { ModeToggle } from './mode-toggle';
 
 const navItems = [
-  { href: '/', label: 'Ai Assistant' },
+  { href: '/', label: 'Me' },
+  { href: '/about', label: 'Ai' },
   { href: '/game', label: 'Game' },
-  { href: '/about', label: 'about' },
   { href: '/blogs', label: 'blogs' },
 ];
 
@@ -32,7 +32,7 @@ export default function Header() {
               href={item.href}
               className={cn(
                 'hover:underline',
-                pathname === item.href && 'text-primary',
+                pathname && pathname === item.href && 'text-primary',
               )}
             >
               {item.label}
