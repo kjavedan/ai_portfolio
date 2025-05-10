@@ -63,7 +63,7 @@ export default function Home() {
             <div className="text-muted-foreground/50 w-50">
               {experience.date.start} - {experience.date.end}
             </div>
-            <div className="max-w-160">
+            <div className="max-w-130">
               <p className="cursor-pointer text-sm hover:underline">
                 {experience.title}
               </p>

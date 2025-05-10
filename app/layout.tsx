@@ -70,7 +70,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <div className="mx-auto max-w-4xl">
+        <div className="mx-auto max-w-3xl">
           <ThemeProvider
             attribute="class"
             defaultTheme="system"
