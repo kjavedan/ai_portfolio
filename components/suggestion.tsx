@@ -19,7 +19,11 @@ const suggestedActions = [
   },
 ];
 
-export default function Suggestion() {
+export default function Suggestion({
+  onSelect,
+}: {
+  onSelect: (suggestion: string) => void;
+}) {
   return (
     <AnimatePresence>
       <div className="mt-10">
@@ -31,6 +35,7 @@ export default function Suggestion() {
             initial={{ opacity: 0, y: index * 5 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: index * 5 }}
+            onClick={() => onSelect(action.title)}
           >
             {action.title}
           </motion.button>
