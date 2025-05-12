@@ -26,7 +26,7 @@ export default function Suggestion({
 }) {
   return (
     <AnimatePresence>
-      <div className="mt-10">
+      <div className="border-white px-4">
         {suggestedActions.map((action, index) => (
           <motion.button
             key={index}

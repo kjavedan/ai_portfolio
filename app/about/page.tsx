@@ -1,5 +1,6 @@
 'use client';
 
+import { cn } from '@/lib/utils';
 import Chat from '@/components/chat';
 import { useChat } from '@/hooks/use-chat';
 import Messages from '@/components/messages';
@@ -21,7 +22,13 @@ export default function About() {
   };
 
   return (
-    <div className="relative size-full">
+    <div
+      className={cn(
+        'relative h-full gap-0 overflow-hidden',
+        !messages.length &&
+          'mb-20 flex flex-col items-center justify-center gap-6 overflow-y-scroll',
+      )}
+    >
       <Messages messages={messages} status={status} />
       <Chat
         input={input}

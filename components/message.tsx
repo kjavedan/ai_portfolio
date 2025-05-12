@@ -8,7 +8,7 @@ import { Alert, AlertDescription, AlertTitle } from './ui/alert';
 
 import type { MessageType } from '@/types';
 
-export default function Message({
+export default function ßMessage({
   message,
   isError,
   isLoading,

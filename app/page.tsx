@@ -47,8 +47,8 @@ export default function Home() {
   };
 
   return (
-    <div className="font-mono">
-      <h2 className="mt-12 max-w-150">
+    <div className="h-full overflow-y-scroll p-4 font-mono">
+      <h2 className="mt-4 max-w-150">
         Frontend focoused engineer in Dubai, intrested in startups, design
         systems and ambitious ideas.
       </h2>

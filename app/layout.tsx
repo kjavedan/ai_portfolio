@@ -70,7 +70,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <div className="mx-auto max-w-3xl">
+        <div className="mx-auto flex h-[100dvh] max-w-3xl flex-col">
           <ThemeProvider
             attribute="class"
             defaultTheme="system"
@@ -78,7 +78,7 @@ export default function RootLayout({
             disableTransitionOnChange
           >
             <Header />
-            <main className="p-4 xl:px-0">{children}</main>
+            <main className="flex-1 overflow-hidden">{children}</main>
           </ThemeProvider>
         </div>
       </body>

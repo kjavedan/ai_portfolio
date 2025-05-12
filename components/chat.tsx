@@ -22,15 +22,15 @@ export default function Chat({
   return (
     <div
       className={cn(
-        'bg-background absolute bottom-0 left-0 h-fit w-full lg:relative',
-        hasMessages && 'bottom-4 lg:absolute',
+        'bg-background relative bottom-0 h-fit w-full p-4',
+        hasMessages && 'absolute bottom-0 rounded-t-2xl md:absolute',
       )}
     >
       <Textarea
         data-testid="chat-input"
         placeholder="Send a message..."
         className={
-          'bg-muted !max-h-[300px] min-h-[120px] resize-none overflow-y-auto rounded-2xl pr-8 pb-10 !text-base dark:border-zinc-700'
+          'bg-muted !max-h-[300px] min-h-[120px] w-full resize-none overflow-y-auto rounded-2xl pr-8 pb-10 !text-base dark:border-zinc-700'
         }
         value={input}
         onChange={(e) => setInput(e.target.value)}
@@ -50,7 +50,7 @@ export default function Chat({
           }
         }}
       />
-      <div className="absolute top-1 right-1 flex w-fit flex-row justify-end p-2">
+      <div className="absolute top-4 right-4 flex w-fit flex-row justify-end p-2">
         <SubmitMessageButton input={input} onSubmit={onSubmit} />
       </div>
     </div>

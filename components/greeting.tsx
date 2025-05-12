@@ -4,7 +4,7 @@ export const Greeting = () => {
   return (
     <div
       key="overview"
-      className="flex flex-col justify-center pt-5 md:mb-10 md:pt-[10dvh]"
+      className="flex w-full flex-col justify-center text-left"
     >
       <motion.div
         initial={{ opacity: 0, y: 10 }}
@@ -20,7 +20,7 @@ export const Greeting = () => {
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: 10 }}
         transition={{ delay: 0.6 }}
-        className="mt-3 text-2xl text-zinc-500"
+        className="mt-3 text-xl text-zinc-500"
       >
         {" I'm Khaled's personal AI assistant, How can I help you today?"}
       </motion.div>
