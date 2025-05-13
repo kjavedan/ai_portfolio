@@ -1,0 +1,21 @@
+echo "🚀 Starting pre-commit checks..."
+
+echo "📝 Running code formatting..."
+pnpm format
+if [ $? -eq 0 ]; then
+    echo "✅ Formatting completed successfully"
+else
+    echo "❌ Formatting failed"
+    exit 1
+fi
+
+echo "🔍 Running linting..."
+pnpm lint
+if [ $? -eq 0 ]; then
+    echo "✅ Linting completed successfully"
+else
+    echo "❌ Linting failed"
+    exit 1
+fi
+
+echo "✨ All pre-commit checks passed successfully!"
