@@ -135,16 +135,16 @@
 
 /* Handle (thumb) */
 ::-webkit-scrollbar-thumb {
-  background: var(--muted-foreground);
+  background: var(--muted);
   border-radius: 8px;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #555;
+  background: #303030;
 }
 
 * {
   scrollbar-width: thin;
-  scrollbar-color: var(--muted-foreground) transparent;
+  scrollbar-color: var(--muted) transparent;
 }

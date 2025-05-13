@@ -1,37 +1,77 @@
+import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
+import { ArrowUpIcon, LoaderCircle, Pause } from 'lucide-react';
 
+import { Button } from './ui/button';
 import { Textarea } from './ui/textarea';
-import SubmitMessageButton from './submit-message-button';
+
+// Define the ChatStatus type if not already defined elsewhere
+type ChatStatus = 'ready' | 'busy' | 'loading' | 'error' | 'abort';
 
 interface ChatProps {
   input: string;
-  setInput: (value: string) => void;
-  onSubmit: () => void;
-  status: 'ready' | 'loading' | 'busy' | 'error';
+  status: ChatStatus;
   hasMessages: boolean;
+  setInput: (value: string) => void;
+  onSubmit: (text?: string) => void;
+  handleAbort: () => void;
+}
+
+// Simple button component
+function ChatButton({
+  input,
+  status,
+  onClick,
+}: {
+  input: string;
+  status: ChatStatus;
+  onClick: (event: React.MouseEvent) => void;
+}) {
+  return (
+    <Button
+      data-testid="send-button"
+      className="aspect-square w-fit rounded-full border p-1.5 dark:border-zinc-600"
+      onClick={onClick}
+      disabled={
+        (!input.length && status === 'ready') ||
+        status === 'error' ||
+        status === 'abort'
+      }
+    >
+      {status === 'busy' || status === 'loading' ? (
+        <Pause />
+      ) : status === 'abort' ? (
+        <LoaderCircle className="animate-spin" />
+      ) : (
+        <ArrowUpIcon size={14} />
+      )}
+    </Button>
+  );
 }
 
 export default function Chat({
   input,
   status,
   hasMessages,
-  //
   onSubmit,
   setInput,
+  handleAbort,
 }: ChatProps) {
   return (
     <div
       className={cn(
-        'bg-background relative bottom-0 h-fit w-full p-4',
-        hasMessages && 'absolute bottom-0 rounded-t-2xl md:absolute',
+        'relative bottom-0 h-fit w-full px-4 pb-4',
+        hasMessages && 'absolute bottom-0 z-10 rounded-t-2xl md:absolute',
       )}
     >
       <Textarea
         data-testid="chat-input"
         placeholder="Send a message..."
-        className={
-          'bg-muted !max-h-[300px] min-h-[120px] w-full resize-none overflow-y-auto rounded-2xl pr-8 pb-10 !text-base dark:border-zinc-700'
-        }
+        className={cn(
+          'bg-muted dark:bg-muted',
+          '!max-h-[300px] min-h-[120px] w-full resize-none overflow-y-auto rounded-2xl pr-8 pb-10',
+          '!text-base dark:border-zinc-700',
+        )}
         value={input}
         onChange={(e) => setInput(e.target.value)}
         onKeyDown={(event) => {
@@ -43,15 +83,28 @@ export default function Chat({
             event.preventDefault();
 
             if (status !== 'ready') {
-              console.log('error');
+              toast.error(status, {
+                position: 'top-right',
+              });
             } else {
               onSubmit();
             }
           }
         }}
       />
-      <div className="absolute top-4 right-4 flex w-fit flex-row justify-end p-2">
-        <SubmitMessageButton input={input} onSubmit={onSubmit} />
+      <div className="absolute top-1 right-4 flex w-fit flex-row justify-end p-2">
+        <ChatButton
+          input={input}
+          status={status}
+          onClick={(event) => {
+            event.preventDefault();
+            if (status === 'ready') {
+              onSubmit();
+            } else {
+              handleAbort();
+            }
+          }}
+        />
       </div>
     </div>
   );

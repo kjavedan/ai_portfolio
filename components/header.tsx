@@ -2,12 +2,11 @@
 
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
-import { useState } from 'react';
 import { Menu, X } from 'lucide-react';
 import { usePathname } from 'next/navigation';
+import { useMenu } from '@/context/menu-context';
 import { AnimatePresence, motion } from 'framer-motion';
 
-import { Button } from './ui/button';
 import { ModeToggle } from './mode-toggle';
 
 const navItems = [
@@ -20,7 +19,7 @@ const navItems = [
 export default function Header() {
   const pathname = usePathname();
 
-  const [isMenu, setIsMenu] = useState(true);
+  const { isMenuOpen, setIsMenuOpen } = useMenu();
 
   const navVariants = {
     visible: {
@@ -58,26 +57,24 @@ export default function Header() {
   };
 
   return (
-    <header className="p-4 py-2 font-mono md:py-4 xl:px-0">
+    <header className="p-4 font-mono md:py-4 xl:px-0">
       <div className="flex items-center justify-between">
         <Link href={'/'} className="font-extrabold">
           <h1 className="w-fit">Khaled Javdan</h1>
         </Link>
-        <div className="flex items-center">
+        <div className="flex items-center gap-3">
           <ModeToggle />
 
-          <Button
-            variant={'link'}
-            size={'icon'}
-            onClick={() => setIsMenu(!isMenu)}
-          >
-            {isMenu ? <X /> : <Menu />}
-          </Button>
+          {isMenuOpen ? (
+            <X size={20} onClick={() => setIsMenuOpen(false)} />
+          ) : (
+            <Menu size={20} onClick={() => setIsMenuOpen(true)} />
+          )}
         </div>
       </div>
       <nav>
         <AnimatePresence>
-          {isMenu && (
+          {isMenuOpen && (
             <motion.ul
               className="text-muted-foreground/70 flex items-center gap-6"
               variants={navVariants}

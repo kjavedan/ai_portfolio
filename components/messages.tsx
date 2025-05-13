@@ -4,19 +4,22 @@ import { useEffect, useRef, useState } from 'react';
 import Message from './message';
 import { Greeting } from './greeting';
 
-import type { MessageType } from '@/types';
+import type { ChatStatus, MessageType } from '@/types';
 
 export default function Messages({
   messages,
   status,
+  handleRetry,
 }: {
   messages: MessageType[];
-  status: 'ready' | 'loading' | 'busy' | 'error';
+  status: ChatStatus;
+  handleRetry: () => void;
 }) {
-  const messagesEndRef = useRef<HTMLDivElement>(null);
-  const [shouldAutoScroll, setShouldAutoScroll] = useState(true);
-  const containerRef = useRef<HTMLDivElement>(null);
   const lastScrollTop = useRef(0);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  const [shouldAutoScroll, setShouldAutoScroll] = useState(true);
 
   const debouncedAutoScroll = debounce(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -62,7 +65,7 @@ export default function Messages({
   return (
     <div
       className={cn(
-        'flex size-full flex-col gap-4 overflow-y-scroll p-4 pb-96',
+        'flex size-full flex-col gap-4 overflow-y-scroll p-4 pr-5 pb-96',
         !messages.length && 'h-fit pb-0',
       )}
       ref={containerRef}
@@ -75,6 +78,7 @@ export default function Messages({
           <Message
             key={index}
             message={msg}
+            handleRetry={handleRetry}
             isError={status === 'error' && index === messages.length - 1}
             isLoading={status === 'loading' && index === messages.length - 1}
           />

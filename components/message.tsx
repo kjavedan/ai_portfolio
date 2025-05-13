@@ -8,14 +8,16 @@ import { Alert, AlertDescription, AlertTitle } from './ui/alert';
 
 import type { MessageType } from '@/types';
 
-export default function ßMessage({
+export default function Message({
   message,
   isError,
   isLoading,
+  handleRetry,
 }: {
   message: MessageType;
   isError: boolean;
   isLoading: boolean;
+  handleRetry: () => void;
 }) {
   return (
     <AnimatePresence>
@@ -31,6 +33,7 @@ export default function ßMessage({
             text={message?.text}
             isError={isError}
             isLoading={isLoading}
+            handleRetry={handleRetry}
           />
         )}
         {message.role === 'user' && <UserMessage text={message?.text} />}
@@ -56,10 +59,12 @@ function AssistantMessage({
   text,
   isError,
   isLoading,
+  handleRetry,
 }: {
   text: string;
   isError: boolean;
   isLoading: boolean;
+  handleRetry: () => void;
 }) {
   return (
     <div className="flex flex-row items-start gap-2">
@@ -68,7 +73,7 @@ function AssistantMessage({
           <SparklesIcon size={12} />
         </div>
       </div>
-      <div>
+      <div className="w-full">
         {isLoading ? <BouncingEllipsis /> : <Markdown>{text}</Markdown>}
 
         {isError && (
@@ -77,8 +82,12 @@ function AssistantMessage({
             <AlertTitle>Error</AlertTitle>
             <AlertDescription>
               An unexpected error accuried please try again
-              <Button className="text-primary mt-2" variant={'outline'}>
-                retry
+              <Button
+                variant={'outline'}
+                onClick={handleRetry}
+                className="text-primary mt-2"
+              >
+                Retry
               </Button>
             </AlertDescription>
           </Alert>

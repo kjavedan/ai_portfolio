@@ -2,11 +2,15 @@ import { ArrowUpIcon } from 'lucide-react';
 
 import { Button } from './ui/button';
 
+import type { ChatStatus } from '@/types';
+
 export default function SubmitMessageButton({
   input,
+  status,
   onSubmit,
 }: {
   input: string;
+  status: ChatStatus;
   onSubmit: () => void;
 }) {
   return (
@@ -17,7 +21,12 @@ export default function SubmitMessageButton({
         event.preventDefault();
         onSubmit();
       }}
-      disabled={input.length === 0}
+      disabled={
+        input.length === 0 ||
+        status === 'busy' ||
+        status === 'error' ||
+        status === 'loading'
+      }
     >
       <ArrowUpIcon size={14} />
     </Button>

@@ -1,7 +1,9 @@
 import './globals.css';
 
 import Header from '@/components/header';
+import { Toaster } from '@/components/ui/sonner';
 import { Geist, Geist_Mono } from 'next/font/google';
+import { MenuProvider } from '@/context/menu-context';
 import ThemeProvider from '@/components/theme-provider';
 
 import type { Metadata } from 'next';
@@ -77,8 +79,11 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <Header />
-            <main className="flex-1 overflow-hidden">{children}</main>
+            <MenuProvider>
+              <Header />
+              <main className="flex-1 overflow-hidden">{children}</main>
+              <Toaster />
+            </MenuProvider>
           </ThemeProvider>
         </div>
       </body>
