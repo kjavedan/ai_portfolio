@@ -125,12 +125,12 @@ export const useChat = () => {
           return () => clearTimeout(timeoutId);
         }),
 
-        // Reject after 5 seconds if threadId didn't get initialized
+        // Reject after 10 seconds if threadId didn't get initialized
         new Promise((_, reject) => {
           setTimeout(() => {
             clearTimeout(timeoutId);
             reject(new Error('Thread creation timeout'));
-          }, 5000);
+          }, 10_000);
         }),
       ]);
     } catch (error) {
