@@ -57,7 +57,7 @@ export default function Header() {
   };
 
   return (
-    <header className="p-4 font-mono md:py-4 xl:px-0">
+    <header className="p-4 font-mono md:py-4 lg:px-0">
       <div className="flex items-center justify-between">
         <Link href={'/'} className="font-extrabold">
           <h1 className="w-fit">Khaled Javdan</h1>

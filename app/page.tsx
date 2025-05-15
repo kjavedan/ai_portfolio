@@ -47,7 +47,7 @@ export default function Home() {
   };
 
   return (
-    <div className="h-full overflow-y-scroll p-4 font-mono">
+    <div className="h-full overflow-y-scroll p-4 font-mono lg:px-0">
       <h2 className="mt-4 max-w-150">
         Frontend focoused engineer in Dubai, intrested in startups, design
         systems and ambitious ideas.

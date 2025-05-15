@@ -65,7 +65,7 @@ export default function Messages({
   return (
     <div
       className={cn(
-        'flex size-full flex-col gap-4 overflow-y-scroll p-4 pr-5 pb-96',
+        'flex size-full flex-col gap-4 overflow-y-scroll p-4 pr-5 pb-96 lg:px-0',
         !messages.length && 'h-fit pb-0',
       )}
       ref={containerRef}
