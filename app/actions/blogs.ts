@@ -24,7 +24,7 @@ export async function getBlogs(): Promise<Blog[]> {
         path: `/blogs/${blogId}`,
         title: data.title || 'Untitled',
         date: data.date || '2024',
-        views: getBlogViews(blogId),
+        views: await getBlogViews(blogId),
       };
     }),
   );

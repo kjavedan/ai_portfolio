@@ -217,19 +217,23 @@ export default function GameField({
   };
 
   // useEffect (1) getting and settting the canvas and context
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (canvas) {
-      canvas.width = screenWidth;
-      canvas.height = screenHeight;
-      setImage(targetsRef.current);
-      setWoriorImage(woriorRef.current);
-      setExplosionImg(explosionRef.current);
-      const bulletImage = bulletRef.current;
-      setCtx(canvas.getContext('2d'));
-      setBulletImg(bulletImage);
-    }
-  }, [ctx, canvasRef, image]);
+  useEffect(
+    () => {
+      const canvas = canvasRef.current;
+      if (canvas) {
+        canvas.width = screenWidth;
+        canvas.height = screenHeight;
+        setImage(targetsRef.current);
+        setWoriorImage(woriorRef.current);
+        setExplosionImg(explosionRef.current);
+        const bulletImage = bulletRef.current;
+        setCtx(canvas.getContext('2d'));
+        setBulletImg(bulletImage);
+      }
+    },
+    // eslint-disable-next-line
+    [ctx, canvasRef, image],
+  );
 
   //useEffect (2) controlling the bullet position
   useEffect(() => {
@@ -269,130 +273,138 @@ export default function GameField({
   }, [gameStatus, bulletSpriteFrame]);
 
   //useEffect 9 setting the X corrdination of the objX
-  useEffect(() => {
-    let timeId: ReturnType<typeof setTimeout>;
+  useEffect(
+    () => {
+      let timeId: ReturnType<typeof setTimeout>;
 
-    if (gameStatus && objX <= screenWidth) {
-      timeId = setInterval(() => {
-        setObjX((objX) => objX + 5);
-        if (levelNumber >= 2 && objX1 >= -woriorSpriteWidth) {
-          setObjX1((objX1) => objX1 - 4);
-        }
-        if (levelNumber >= 3 && objX2 <= screenWidth) {
-          setObjX2((objX2) => objX2 + 15);
-        }
-      }, 40);
-    }
+      if (gameStatus && objX <= screenWidth) {
+        timeId = setInterval(() => {
+          setObjX((objX) => objX + 5);
+          if (levelNumber >= 2 && objX1 >= -woriorSpriteWidth) {
+            setObjX1((objX1) => objX1 - 4);
+          }
+          if (levelNumber >= 3 && objX2 <= screenWidth) {
+            setObjX2((objX2) => objX2 + 15);
+          }
+        }, 40);
+      }
 
-    // switching targets 1 frames
-    if (spriteFrame >= targetsSpriteFrame) setSpriteFrame(0);
-    setSpriteFrame((PS) => PS + 1);
+      // switching targets 1 frames
+      if (spriteFrame >= targetsSpriteFrame) setSpriteFrame(0);
+      setSpriteFrame((PS) => PS + 1);
 
-    if (objX > screenWidth) setObjX(-spriteSizeW);
+      if (objX > screenWidth) setObjX(-spriteSizeW);
 
-    //level 2 target frams
-    if (!(objX1 >= -woriorSpriteWidth)) {
-      setObjX1(screenWidth + woriorSpriteWidth);
-    }
-    if (woriorOneSpriteFrame <= 0) {
-      setworiorOneSpriteFrame(woriorSpriteFrame);
-    } else {
-      setworiorOneSpriteFrame((prevFrame) => prevFrame - 1);
-    }
+      //level 2 target frams
+      if (!(objX1 >= -woriorSpriteWidth)) {
+        setObjX1(screenWidth + woriorSpriteWidth);
+      }
+      if (woriorOneSpriteFrame <= 0) {
+        setworiorOneSpriteFrame(woriorSpriteFrame);
+      } else {
+        setworiorOneSpriteFrame((prevFrame) => prevFrame - 1);
+      }
 
-    //level 3 target frams
-    if (objX2 > screenWidth) {
-      setObjX2(-woriorSpriteWidth);
-    }
-    if (woriorTwoSpriteFrame < woriorSpriteFrame) {
-      setworiorTwoSpriteFrame((prevFrame) => prevFrame + 1);
-    } else {
-      setworiorTwoSpriteFrame(0);
-    }
+      //level 3 target frams
+      if (objX2 > screenWidth) {
+        setObjX2(-woriorSpriteWidth);
+      }
+      if (woriorTwoSpriteFrame < woriorSpriteFrame) {
+        setworiorTwoSpriteFrame((prevFrame) => prevFrame + 1);
+      } else {
+        setworiorTwoSpriteFrame(0);
+      }
 
-    return () => {
-      clearInterval(timeId);
-    };
-  }, [gameStatus, startPlay, objX]);
+      return () => {
+        clearInterval(timeId);
+      };
+    },
+    // eslint-disable-next-line
+    [gameStatus, startPlay, objX],
+  );
 
   // useEffect (4) collision detection
-  useEffect(() => {
-    if (gameStatus && shooting) {
-      if (
-        checkCollision(
-          objX,
-          objY,
-          spriteHeight,
-          spriteWidth,
-          bulletPositionX,
-          bulletPositionY,
-          bulletSpriteWidth,
-          bulletSpriteHeight,
-        )
-      ) {
-        setShooting(false);
-        setBulletPostionY(320);
-        setObjX(-spriteWidth);
-        setlevelScore((score) => score + ENEMY_SCORES.top);
-        setIsCollied(true);
-        setCollisionInfo({ collisionX: objX, collisionY: objY });
-        playCollisionSound();
+  useEffect(
+    () => {
+      if (gameStatus && shooting) {
+        if (
+          checkCollision(
+            objX,
+            objY,
+            spriteHeight,
+            spriteWidth,
+            bulletPositionX,
+            bulletPositionY,
+            bulletSpriteWidth,
+            bulletSpriteHeight,
+          )
+        ) {
+          setShooting(false);
+          setBulletPostionY(320);
+          setObjX(-spriteWidth);
+          setlevelScore((score) => score + ENEMY_SCORES.top);
+          setIsCollied(true);
+          setCollisionInfo({ collisionX: objX, collisionY: objY });
+          playCollisionSound();
+        }
+        if (
+          levelNumber >= 2 &&
+          checkCollision(
+            objX1,
+            objY1,
+            spriteHeight,
+            spriteWidth,
+            bulletPositionX,
+            bulletPositionY,
+            bulletSpriteWidth,
+            bulletSpriteHeight,
+          )
+        ) {
+          setShooting(false);
+          setBulletPostionY(320);
+          setObjX1(screenWidth + spriteWidth);
+          setlevelScore((score) => score + ENEMY_SCORES.middle);
+          setIsCollied(true);
+          setCollisionInfo({ collisionX: objX1, collisionY: objY1 });
+          playWoriorOneGrunt();
+        }
+        if (
+          levelNumber >= 3 &&
+          checkCollision(
+            objX2,
+            objY2,
+            spriteHeight,
+            spriteWidth,
+            bulletPositionX,
+            bulletPositionY,
+            bulletSpriteWidth,
+            bulletSpriteHeight,
+          )
+        ) {
+          setShooting(false);
+          setBulletPostionY(320);
+          setObjX2(-spriteWidth);
+          setlevelScore((score) => score + ENEMY_SCORES.bottom);
+          setIsCollied(true);
+          setCollisionInfo({ collisionX: objX2, collisionY: objY2 });
+          playWoriorTwoGrunt();
+        }
       }
-      if (
-        levelNumber >= 2 &&
-        checkCollision(
-          objX1,
-          objY1,
-          spriteHeight,
-          spriteWidth,
-          bulletPositionX,
-          bulletPositionY,
-          bulletSpriteWidth,
-          bulletSpriteHeight,
-        )
-      ) {
-        setShooting(false);
-        setBulletPostionY(320);
-        setObjX1(screenWidth + spriteWidth);
-        setlevelScore((score) => score + ENEMY_SCORES.middle);
-        setIsCollied(true);
-        setCollisionInfo({ collisionX: objX1, collisionY: objY1 });
-        playWoriorOneGrunt();
-      }
-      if (
-        levelNumber >= 3 &&
-        checkCollision(
-          objX2,
-          objY2,
-          spriteHeight,
-          spriteWidth,
-          bulletPositionX,
-          bulletPositionY,
-          bulletSpriteWidth,
-          bulletSpriteHeight,
-        )
-      ) {
-        setShooting(false);
-        setBulletPostionY(320);
-        setObjX2(-spriteWidth);
-        setlevelScore((score) => score + ENEMY_SCORES.bottom);
-        setIsCollied(true);
-        setCollisionInfo({ collisionX: objX2, collisionY: objY2 });
-        playWoriorTwoGrunt();
-      }
-    }
-  }, [
-    gameStatus,
-    shooting,
-    bulletPositionY,
-    levelScore,
-    bulletPositionX,
-    bulletSpriteWidth,
-    objX,
-    objY,
-    spriteHeight,
-    spriteWidth,
-  ]);
+    },
+    // eslint-disable-next-line
+    [
+      gameStatus,
+      shooting,
+      bulletPositionY,
+      levelScore,
+      bulletPositionX,
+      bulletSpriteWidth,
+      objX,
+      objY,
+      spriteHeight,
+      spriteWidth,
+    ],
+  );
 
   // console.log(screenWidth);
 
@@ -449,29 +461,33 @@ export default function GameField({
   }, [ctx, screenWidth]);
 
   // Add new useEffect for timer
-  useEffect(() => {
-    let timerId: ReturnType<typeof setInterval>;
+  useEffect(
+    () => {
+      let timerId: ReturnType<typeof setInterval>;
 
-    if (gameStatus && timeLeft > 0 && !gameOver) {
-      timerId = setInterval(() => {
-        setTimeLeft((prev) => {
-          if (prev <= 1) {
-            // Game over
-            setGameOver(true);
-            setGameStatus(false);
-            setStartPlay(false);
-            setFinalScore(levelScore);
-            return 0;
-          }
-          return prev - 1;
-        });
-      }, 1000);
-    }
+      if (gameStatus && timeLeft > 0 && !gameOver) {
+        timerId = setInterval(() => {
+          setTimeLeft((prev) => {
+            if (prev <= 1) {
+              // Game over
+              setGameOver(true);
+              setGameStatus(false);
+              setStartPlay(false);
+              setFinalScore(levelScore);
+              return 0;
+            }
+            return prev - 1;
+          });
+        }, 1000);
+      }
 
-    return () => {
-      clearInterval(timerId);
-    };
-  }, [gameStatus, timeLeft, gameOver]);
+      return () => {
+        clearInterval(timerId);
+      };
+    },
+    // eslint-disable-next-line
+    [gameStatus, timeLeft, gameOver],
+  );
 
   return (
     <div className="flex size-full flex-col">
