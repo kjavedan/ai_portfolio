@@ -60,7 +60,7 @@ export default function Chat({
   return (
     <div
       className={cn(
-        'relative bottom-0 h-fit w-full px-4 pb-4',
+        'relative bottom-0 h-fit w-full px-4 pb-4 lg:px-0',
         hasMessages && 'absolute bottom-0 z-10 rounded-t-2xl md:absolute',
       )}
     >
