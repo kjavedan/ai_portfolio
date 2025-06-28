@@ -3,8 +3,8 @@ import path from 'path';
 
 import matter from 'gray-matter';
 import { notFound } from 'next/navigation';
-import { MDXRemote } from 'next-mdx-remote/rsc';
 import { incrementView } from '@/app/actions/blog-views';
+import { Markdown } from '@/components/markdown';
 
 interface BlogPageProps {
   params: Promise<{
@@ -31,7 +31,7 @@ export default async function Blog({ params }: BlogPageProps) {
     return (
       <article className="prose-gray prose-lg prose-h1:font-bold prose-h2:font-bold prose-h3:font-bold prose-a:underline prose-ul:list-disc prose-ol:list-decimal prose-blockquote:border-l-4 prose-blockquote:border-gray-300 prose-blockquote:pl-4 prose-blockquote:italic prose-blockquote:text-gray-700 dark:prose-blockquote:border-gray-700 dark:prose-blockquote:text-gray-300 size-full overflow-y-scroll px-4 pt-6 pb-20 lg:px-0">
         <div className="text-muted-foreground mb-4 text-sm">{views} views</div>
-        <MDXRemote source={content} />
+        <Markdown>{content}</Markdown>
       </article>
     );
   } catch (error) {

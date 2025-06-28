@@ -9,6 +9,50 @@ const components: Partial<Components> = {
   // @ts-expect-error - CodeBlock component has different props than expected by react-markdown
   code: CodeBlock,
   pre: ({ children }) => <>{children}</>,
+  table: ({ children, ...props }) => {
+    return (
+      <div className="my-6 overflow-x-auto">
+        <table className="w-full border-collapse border border-gray-300 dark:border-zinc-900" {...props}>
+          {children}
+        </table>
+      </div>
+    );
+  },
+  thead: ({ children, ...props }) => {
+    return (
+      <thead className="bg-gray-50 dark:bg-zinc-800" {...props}>
+        {children}
+      </thead>
+    );
+  },
+  tbody: ({ children, ...props }) => {
+    return (
+      <tbody className="divide-y divide-gray-200 dark:divide-zinc-700" {...props}>
+        {children}
+      </tbody>
+    );
+  },
+  tr: ({ children, ...props }) => {
+    return (
+      <tr className="hover:bg-gray-50 dark:hover:bg-zinc-800" {...props}>
+        {children}
+      </tr>
+    );
+  },
+  th: ({ children, ...props }) => {
+    return (
+      <th className="border border-gray-300 dark:border-gray-600 px-4 py-2 text-left font-semibold text-gray-900 dark:text-gray-100" {...props}>
+        {children}
+      </th>
+    );
+  },
+  td: ({ children, ...props }) => {
+    return (
+      <td className="border border-gray-300 dark:border-zinc-600 px-4 py-2 text-gray-900 dark:text-gray-100" {...props}>
+        {children}
+      </td>
+    );
+  },
   ol: ({ children, ...props }) => {
     return (
       <ol className="ml-4 list-outside list-decimal" {...props}>

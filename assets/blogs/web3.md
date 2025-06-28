@@ -1,9 +1,10 @@
-
 ---
 title: 'Web3'
 date: '2025'
 author: Khaled
 ---
+
+# Web3
 
 ## 🔗 What is Web3?  
 Web3 is simply the next version of the internet — **Web 3.0**.  
