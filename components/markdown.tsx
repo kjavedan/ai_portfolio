@@ -12,7 +12,10 @@ const components: Partial<Components> = {
   table: ({ children, ...props }) => {
     return (
       <div className="my-6 overflow-x-auto">
-        <table className="w-full border-collapse border border-gray-300 dark:border-zinc-900" {...props}>
+        <table
+          className="w-full border-collapse border border-gray-300 dark:border-zinc-900"
+          {...props}
+        >
           {children}
         </table>
       </div>
@@ -27,7 +30,10 @@ const components: Partial<Components> = {
   },
   tbody: ({ children, ...props }) => {
     return (
-      <tbody className="divide-y divide-gray-200 dark:divide-zinc-700" {...props}>
+      <tbody
+        className="divide-y divide-gray-200 dark:divide-zinc-700"
+        {...props}
+      >
         {children}
       </tbody>
     );
@@ -41,14 +47,20 @@ const components: Partial<Components> = {
   },
   th: ({ children, ...props }) => {
     return (
-      <th className="border border-gray-300 dark:border-gray-600 px-4 py-2 text-left font-semibold text-gray-900 dark:text-gray-100" {...props}>
+      <th
+        className="border border-gray-300 px-4 py-2 text-left font-semibold text-gray-900 dark:border-gray-600 dark:text-gray-100"
+        {...props}
+      >
         {children}
       </th>
     );
   },
   td: ({ children, ...props }) => {
     return (
-      <td className="border border-gray-300 dark:border-zinc-600 px-4 py-2 text-gray-900 dark:text-gray-100" {...props}>
+      <td
+        className="border border-gray-300 px-4 py-2 text-gray-900 dark:border-zinc-600 dark:text-gray-100"
+        {...props}
+      >
         {children}
       </td>
     );
