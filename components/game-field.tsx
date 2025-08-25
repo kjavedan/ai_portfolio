@@ -75,7 +75,7 @@ export default function GameField({
   );
   const [bulletImg, setBulletImg] = useState<HTMLImageElement | null>(null);
   const [bulletSpriteFrame, setBulletSpriteFrame] = useState(0);
-  const [bulletPositionY, setBulletPostionY] = useState(320);
+  const [bulletPositionY, setBulletPostionY] = useState(310);
   const [bulletPositionX, setBulletPostionX] = useState(
     screenWidth / 2 - bulletSpriteWidth - 20,
   );
@@ -500,9 +500,9 @@ export default function GameField({
           src={levelBg}
           priority={true}
           alt="level background"
-          className="lg:auto absolute top-0 left-0 -z-10 h-[300px] w-full lg:h-[450]"
+          className="lg:auto absolute top-0 left-0 -z-10 h-[300px] w-full lg:h-[320]"
         />
-        <canvas ref={canvasRef} className="h-[400px] w-full lg:h-[450px]">
+        <canvas ref={canvasRef} className="h-[400px] w-full lg:h-[440px]">
           {/* targets image */}
           <Image
             ref={targetsRef}
@@ -556,7 +556,7 @@ export default function GameField({
           </div>
         )}
       </div>
-      <div className="flex items-center justify-around pb-30 lg:h-40 lg:pb-0">
+      <div className="flex items-center justify-around pb-30 lg:h-10 lg:pb-0">
         <button onClick={handlePlay} className="cursor-pointer">
           {gameStatus ? (
             <div>

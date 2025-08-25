@@ -13,8 +13,9 @@ const navItems = [
   { href: '/', label: 'Me' },
   { href: '/about', label: 'Ai' },
   { href: '/game', label: 'Game' },
-  { href: '/blogs', label: 'blogs' },
-  { href: 'https://services.khaled-javdan.com/', label: 'services' },
+  { href: '/blogs', label: 'Blog' },
+  { href: '/projects', label: 'Work' },
+  { href: 'https://services.khaled-javdan.com/', label: 'Services' },
 ];
 
 export default function Header() {
@@ -77,7 +78,7 @@ export default function Header() {
         <AnimatePresence>
           {isMenuOpen && (
             <motion.ul
-              className="text-muted-foreground/70 flex items-center gap-6"
+              className="text-muted-foreground/70 flex flex-wrap items-center gap-4 md:gap-8"
               variants={navVariants}
               initial="hidden"
               animate="visible"
