@@ -67,7 +67,7 @@ const components: Partial<Components> = {
   },
   ol: ({ children, ...props }) => {
     return (
-      <ol className="ml-4 list-outside list-decimal" {...props}>
+      <ol className="list-outside list-decimal" {...props}>
         {children}
       </ol>
     );
@@ -81,7 +81,7 @@ const components: Partial<Components> = {
   },
   ul: ({ children, ...props }) => {
     return (
-      <ul className="ml-4 list-outside list-decimal" {...props}>
+      <ul className="list-outside list-decimal" {...props}>
         {children}
       </ul>
     );
