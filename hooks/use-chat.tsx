@@ -1,144 +1,140 @@
-import { toast } from 'sonner';
-import { useEffect, useRef, useState } from 'react';
-import { AssistantStream } from 'openai/lib/AssistantStream.mjs';
+import { useCallback, useRef, useState } from 'react';
 
 import type { ChatStatus, MessageType } from '@/types';
 
 export const useChat = () => {
-  const abortRef = useRef<boolean>(false);
-  const threadIdRef = useRef<string>('');
-  const [input, setInput] = useState<string>('');
+  const abortControllerRef = useRef<AbortController | null>(null);
+  const pendingTextRef = useRef<string>('');
+  const rafIdRef = useRef<number>(0);
 
+  const [input, setInput] = useState<string>('');
   const [messages, setMessages] = useState<MessageType[]>([]);
   const [status, setStatus] = useState<ChatStatus>('ready');
 
-  const createThread = async () => {
-    const res = await fetch('/api/threads', {
-      method: 'POST',
-    });
-    const data = await res.json();
-    threadIdRef.current = data.threadId;
-  };
+  // Flush accumulated text to React state on the next animation frame
+  const scheduleFlush = useCallback(() => {
+    if (rafIdRef.current) return; // already scheduled
 
-  useEffect(() => {
-    createThread();
+    rafIdRef.current = requestAnimationFrame(() => {
+      rafIdRef.current = 0;
+      const text = pendingTextRef.current;
+      if (!text) return;
+
+      setMessages((prev) => {
+        const last = prev[prev.length - 1];
+        return [...prev.slice(0, -1), { ...last, text: last.text + text }];
+      });
+      pendingTextRef.current = '';
+    });
   }, []);
 
   const sendMessage = async (text: string) => {
-    abortRef.current = false;
-    appendNewMessage('user', text);
-    appendNewMessage('assistant');
+    const userMessage: MessageType = { role: 'user', text };
+    const assistantMessage: MessageType = { role: 'assistant', text: '' };
 
+    setMessages((prev) => [...prev, userMessage, assistantMessage]);
+    setInput('');
     setStatus('loading');
+    pendingTextRef.current = '';
 
-    if (!threadIdRef.current) {
-      await handleUndefinedThreadId();
-    }
+    // Build the messages array for the API (include full history)
+    const apiMessages = [
+      ...messages.map((m) => ({
+        role: m.role as 'user' | 'assistant',
+        content: m.text,
+      })),
+      { role: 'user' as const, content: text },
+    ];
 
-    await fetch(`/api/threads/${threadIdRef.current}`, {
-      method: 'POST',
-      body: JSON.stringify({
-        content: text,
-      }),
-      signal: AbortSignal.timeout(15_000),
-    })
-      .then((res) => {
-        if (!res.body) throw new Error('No response body');
+    const controller = new AbortController();
+    abortControllerRef.current = controller;
 
-        const stream = AssistantStream.fromReadableStream(res.body);
-
-        stream
-          .on('textDelta', async ({ value }) => {
-            if (abortRef.current) {
-              stream.abort();
-              return;
-            }
-            handleTextDelta(value);
-          })
-          .on('abort', () => setStatus('ready'))
-          .on('textDone', () => setStatus('ready'))
-          .on('error', (error) => {
-            console.error(error);
-            setStatus('error');
-          });
-      })
-      .catch((error) => {
-        console.error(error);
-        setStatus(error === 'aborted' ? 'ready' : 'error');
+    try {
+      const res = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ messages: apiMessages }),
+        signal: controller.signal,
       });
+
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      if (!res.body) throw new Error('No response body');
+
+      setStatus('busy');
+
+      const reader = res.body.getReader();
+      const decoder = new TextDecoder();
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+
+        if (controller.signal.aborted) {
+          reader.cancel();
+          break;
+        }
+
+        const chunk = decoder.decode(value, { stream: true });
+        pendingTextRef.current += chunk;
+        scheduleFlush();
+      }
+
+      // Final flush for any remaining text
+      if (rafIdRef.current) {
+        cancelAnimationFrame(rafIdRef.current);
+        rafIdRef.current = 0;
+      }
+      if (pendingTextRef.current) {
+        const remaining = pendingTextRef.current;
+        pendingTextRef.current = '';
+        setMessages((prev) => {
+          const last = prev[prev.length - 1];
+          return [
+            ...prev.slice(0, -1),
+            { ...last, text: last.text + remaining },
+          ];
+        });
+      }
+
+      if (!controller.signal.aborted) {
+        setStatus('ready');
+      }
+    } catch (error) {
+      if (error instanceof DOMException && error.name === 'AbortError') {
+        setStatus('ready');
+      } else {
+        console.error(error);
+        setStatus('error');
+      }
+    } finally {
+      abortControllerRef.current = null;
+    }
   };
 
-  const handleTextDelta = (text: string | undefined) => {
-    if (status !== 'busy') {
-      setStatus('busy');
+  const handleAbort = () => {
+    abortControllerRef.current?.abort();
+    setStatus('abort');
+
+    // Brief delay then ready so the UI can settle
+    setTimeout(() => setStatus('ready'), 300);
+  };
+
+  const handleRetry = () => {
+    if (!messages.length) {
+      window.location.reload();
+      return;
     }
-    setMessages((prevMessages) => {
-      const lastMessage = prevMessages[prevMessages.length - 1];
-      const updatedLastMessage = {
-        ...lastMessage,
-        text: lastMessage.text + text,
-      };
-      return [...prevMessages.slice(0, -1), updatedLastMessage];
-    });
+    const pendingMessage = messages[messages.length - 2].text;
+    setMessages((prev) => prev.slice(0, -2));
+    sendMessage(pendingMessage);
   };
 
   const appendNewMessage = (
     role: 'user' | 'assistant',
     text: string = '',
   ): void => {
-    setMessages((prevMessages) => [...prevMessages, { role, text }]);
+    setMessages((prev) => [...prev, { role, text }]);
     setInput('');
-  };
-
-  const handleAbort = () => {
-    console.log('aborted');
-    abortRef.current = true;
-    setStatus('abort');
-  };
-
-  const handleRetry = () => {
-    if (!messages.length) window.location.reload();
-    const pendingMesage = messages[messages.length - 2].text;
-    setMessages((prevMessages) => [
-      ...prevMessages.slice(0, prevMessages.length - 2),
-    ]);
-    sendMessage(pendingMesage);
-  };
-
-  const handleUndefinedThreadId = async () => {
-    try {
-      let timeoutId: ReturnType<typeof setTimeout>;
-
-      // Wait till threadId gets initialized before calling messages api
-      await Promise.race([
-        new Promise<void>((resolve) => {
-          const checkThreadId = () => {
-            if (threadIdRef.current) {
-              clearTimeout(timeoutId);
-              resolve();
-            } else {
-              timeoutId = setTimeout(checkThreadId, 500);
-            }
-          };
-          checkThreadId();
-
-          return () => clearTimeout(timeoutId);
-        }),
-
-        // Reject after 10 seconds if threadId didn't get initialized
-        new Promise((_, reject) => {
-          setTimeout(() => {
-            clearTimeout(timeoutId);
-            reject(new Error('Thread creation timeout'));
-          }, 10_000);
-        }),
-      ]);
-    } catch (error) {
-      console.error(error);
-      setStatus('error');
-      toast.error('Failed to create thread');
-      return;
-    }
   };
 
   return {

@@ -3,6 +3,7 @@ import path from 'path';
 
 import matter from 'gray-matter';
 import { notFound } from 'next/navigation';
+
 import { Markdown } from '@/components/markdown';
 import { incrementView } from '@/app/actions/blog-views';
 

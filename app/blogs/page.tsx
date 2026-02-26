@@ -1,4 +1,5 @@
 import Link from 'next/link';
+
 import { getBlogs } from '@/app/actions/blogs';
 import {
   Table,

@@ -4,6 +4,7 @@ import fs from 'fs';
 import path from 'path';
 
 import matter from 'gray-matter';
+
 import { getBlogViews } from '@/lib/blog-views';
 
 import type { Blog } from '@/types/blog';

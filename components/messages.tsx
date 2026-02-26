@@ -1,5 +1,6 @@
-import { cn, debounce } from '@/lib/utils';
 import { useEffect, useRef, useState } from 'react';
+
+import { cn, debounce } from '@/lib/utils';
 
 import Message from './message';
 import { Greeting } from './greeting';
@@ -65,7 +66,7 @@ export default function Messages({
   return (
     <div
       className={cn(
-        'flex size-full flex-col gap-4 overflow-y-scroll p-4 pr-5 pb-96 lg:px-0',
+        'flex size-full flex-col gap-4 overflow-y-scroll p-4 pr-5 pb-96 lg:pr-3 lg:pl-0',
         !messages.length && 'h-fit pb-0',
       )}
       ref={containerRef}

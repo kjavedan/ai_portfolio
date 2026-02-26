@@ -1,6 +1,7 @@
 import { toast } from 'sonner';
-import { cn } from '@/lib/utils';
 import { ArrowUpIcon, LoaderCircle, Pause } from 'lucide-react';
+
+import { cn } from '@/lib/utils';
 
 import { Button } from './ui/button';
 import { Textarea } from './ui/textarea';
@@ -69,7 +70,7 @@ export default function Chat({
         placeholder="Send a message..."
         className={cn(
           'bg-muted dark:bg-muted',
-          '!max-h-[300px] min-h-[120px] w-full resize-none overflow-y-auto rounded-2xl pr-8 pb-10',
+          '!max-h-[300px] min-h-[120px] w-full resize-none overflow-y-auto pr-8 pb-10',
           '!text-base dark:border-zinc-700',
         )}
         value={input}

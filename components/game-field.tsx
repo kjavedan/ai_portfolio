@@ -1,15 +1,16 @@
 'use client';
 import Image from 'next/image';
 import { useSound } from 'use-sound';
+import { useEffect, useRef, useState } from 'react';
+
 import shootIcon from '@/assets/fire.png';
 import pauseIcon from '@/assets/pause.png';
-import levelBg from '@/assets/level-bg.png';
+import levelBg from '@/assets/level-bg.jpg';
 import bulletSrc from '@/assets/bullet.png';
 import reloadIcon from '@/assets/reload.png';
 import levelWorior from '@/assets/woriors.png';
 import playIcon from '@/assets/play-button.png';
 import explosionSrc from '@/assets/explosion.png';
-import { useEffect, useRef, useState } from 'react';
 import levelTarget from '@/assets/level-targets.png';
 import checkCollision from '@/lib/collision-detection';
 
@@ -500,9 +501,9 @@ export default function GameField({
           src={levelBg}
           priority={true}
           alt="level background"
-          className="lg:auto absolute top-0 left-0 -z-10 h-[300px] w-full lg:h-[320]"
+          className="lg:auto absolute top-0 left-0 -z-10 h-[300px] w-full lg:h-[370px]"
         />
-        <canvas ref={canvasRef} className="h-[400px] w-full lg:h-[440px]">
+        <canvas ref={canvasRef} className="h-[400px] w-full lg:h-[480px]">
           {/* targets image */}
           <Image
             ref={targetsRef}

@@ -1,4 +1,5 @@
 import { NextRequest } from 'next/server';
+
 import { ASSISTANT_ID, openai } from '@/lib/config';
 
 export async function POST(

@@ -29,7 +29,7 @@ export default function About() {
   return (
     <div
       className={cn(
-        'relative h-full gap-0 overflow-hidden pb-4',
+        'relative h-full gap-0 overflow-hidden pb-4 lg:px-1',
         !messages.length &&
           'flex flex-col items-center justify-center gap-6 overflow-y-scroll md:mb-20',
       )}

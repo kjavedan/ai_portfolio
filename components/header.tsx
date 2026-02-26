@@ -1,11 +1,12 @@
 'use client';
 
 import Link from 'next/link';
-import { cn } from '@/lib/utils';
 import { Menu, X } from 'lucide-react';
 import { usePathname } from 'next/navigation';
-import { useMenu } from '@/context/menu-context';
 import { AnimatePresence, motion } from 'framer-motion';
+
+import { cn } from '@/lib/utils';
+import { useMenu } from '@/context/menu-context';
 
 import { ModeToggle } from './mode-toggle';
 
