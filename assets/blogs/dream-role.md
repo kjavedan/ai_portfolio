@@ -16,7 +16,7 @@ date: '2025'
 
 ---
 
-Hi, my name is Khaled. I’m 27 years old, soon I’ll be 28 🥲.
+Hi, my name is Khaled..
 
 In this post, I’ll be talking to a specific person, the one whom I’m going to work with in the future.
 
@@ -52,10 +52,10 @@ You are here to make a positive impact.
 ### My Tech Stack
 
 **Languages:** HTML5, CSS3, JavaScript, TypeScript  
-**Frontend:** React, Next.js, Vue.js, Tailwind CSS, ShadCN, Material UI, Zustand, TanStack  
-**Backend & API:** Node.js, Express, MongoDB, RESTful APIs, JWT, OAuth  
+**Frontend:** React, Next.js, Vue.js, Tailwind CSS, ShadCN, Material UI, Zustand, TanStack, React Hook Form, Zod, i18n  
+**Backend & API:** Node.js, Express, Fastify, MongoDB, PostgreSQL, Prisma ORM, RESTful APIs, JWT, OAuth, Stripe  
 **Testing & Tools:** Jest, Vitest, Playwright, Vite, Webpack  
-**DevOps:** Git, GitHub, AWS, Docker, Vercel, Railway, CI/CD pipelines  
+**DevOps:** Git, GitHub, AWS, GCP, Docker, Vercel, Railway, CI/CD pipelines  
 **I Speak:** English (fluent), Arabic (native), Farsi (native)
 
 ---

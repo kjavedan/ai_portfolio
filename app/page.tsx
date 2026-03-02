@@ -55,8 +55,8 @@ export default function Home() {
   return (
     <div className="h-full overflow-y-scroll p-4 font-mono lg:px-0">
       <h2 className="mt-4 max-w-150">
-        Frontend focoused engineer in Dubai, intrested in startups, design
-        systems and ambitious ideas.{' '}
+        Full Stack engineer in Dubai, intrested in startups, design systems and
+        ambitious ideas.{' '}
       </h2>
 
       <ol className="mt-8 flex flex-col gap-4">
