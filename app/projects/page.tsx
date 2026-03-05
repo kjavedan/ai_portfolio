@@ -3,24 +3,30 @@
 const projects = [
   {
     id: 0,
+    title: 'Resume Maker',
+    link: 'https://resume-maker.khaled-javdan.com/',
+    desc: 'AI Resume creator/editor',
+  },
+  {
+    id: 1,
     title: 'Cofound',
     link: 'https://cofound.com/',
     desc: 'Ventur Capital Cofounder Help',
   },
   {
-    id: 1,
+    id: 2,
     title: 'ChikRice',
     link: 'https://chikrice.khaled-javdan.com/',
     desc: 'Fitness-focused meal planning web app evolution',
   },
   {
-    id: 2,
+    id: 3,
     title: 'JoJoShop',
     link: 'https://shop.khaled-javdan.com/',
     desc: 'An ecommerce website to learn MERN stack',
   },
   {
-    id: 3,
+    id: 4,
     title: 'First Portfolio',
     link: 'https://khaled-javedan-portfolio.netlify.app/projects',
     desc: 'Bunch of websites to learn HTML, CSS, JavaScript, and React.',
