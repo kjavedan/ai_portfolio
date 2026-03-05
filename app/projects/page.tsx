@@ -35,7 +35,7 @@ const projects = [
 
 export default function Projects() {
   return (
-    <div className="h-full p-4 font-mono lg:px-0">
+    <div className="h-full overflow-y-scroll p-4 font-mono lg:pt-0 lg:pl-0">
       <div className="grid grid-cols-2 gap-4">
         {projects.map((project) => (
           <a
