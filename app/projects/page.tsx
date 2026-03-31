@@ -10,7 +10,7 @@ const projects = [
   {
     id: 1,
     title: 'Cofound',
-    link: 'https://cofound.com/',
+    link: 'https://dev.cofound.com/',
     desc: 'Ventur Capital Cofounder Help',
   },
   {

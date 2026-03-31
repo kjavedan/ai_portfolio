@@ -8,7 +8,7 @@ const experiences = [
     id: 0,
     date: { start: '2025', end: '2026' },
     title: 'Cofound.com, Remote',
-    desc: 'Lead frontend engineer',
+    desc: 'Full Stack Engineer',
   },
   {
     id: 1,

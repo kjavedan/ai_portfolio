@@ -1,4 +1,8 @@
 @import 'tailwindcss';
+
+html {
+  font-size: 125%;
+}
 @import 'tw-animate-css';
 @plugin "@tailwindcss/typography";
 
