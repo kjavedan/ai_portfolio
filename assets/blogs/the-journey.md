@@ -1,6 +1,6 @@
 ---
 title: 'The Journey'
-date: '2025'
+date: '2025-02-07'
 ---
 
 # The journey?

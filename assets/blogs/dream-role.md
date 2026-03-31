@@ -1,6 +1,6 @@
 ---
 title: 'Dream role'
-date: '2025'
+date: '2025-08-02'
 ---
 
 # My Journey to Becoming Your Next Hire

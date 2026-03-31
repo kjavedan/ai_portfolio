@@ -16,7 +16,7 @@ const navItems = [
   { href: '/game', label: 'Game' },
   { href: '/blogs', label: 'Blog' },
   { href: '/projects', label: 'Work' },
-  { href: 'https://services.khaled-javdan.com/', label: 'Services' },
+  { href: '/my-services', label: 'My Services' },
 ];
 
 export default function Header() {

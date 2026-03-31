@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { useState } from 'react';
 
 const experiences = [
@@ -55,8 +56,10 @@ export default function Home() {
   return (
     <div className="h-full overflow-y-scroll p-4 font-mono lg:px-0">
       <h2 className="mt-4 max-w-150">
-        Full Stack engineer in Dubai, intrested in startups, design systems and
-        ambitious ideas.{' '}
+        Full Stack engineer in Dubai, Export in Building MVPs.
+        <Link href={'/services'} className="block underline">
+          see my services
+        </Link>
       </h2>
 
       <ol className="mt-8 flex flex-col gap-4">
