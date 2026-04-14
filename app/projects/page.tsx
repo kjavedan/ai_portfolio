@@ -36,7 +36,7 @@ const projects = [
 export default function Projects() {
   return (
     <div className="h-full overflow-y-scroll p-4 font-mono lg:pt-0 lg:pl-0">
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         {projects.map((project) => (
           <a
             key={project.id}

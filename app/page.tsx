@@ -56,8 +56,8 @@ export default function Home() {
   return (
     <div className="h-full overflow-y-scroll p-4 font-mono lg:px-0">
       <h2 className="mt-4 max-w-150">
-        Full Stack engineer in Dubai, Expert in Building MVPs.
-        <Link href={'/services'} className="block underline">
+        Full Stack engineer in Dubai.
+        <Link href={'/my-services'} className="block underline">
           see my services
         </Link>
       </h2>
