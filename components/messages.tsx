@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 
-import { cn, debounce } from '@/lib/utils';
+import { cn } from '@/lib/utils';
 
 import Message from './message';
 import { Greeting } from './greeting';
@@ -17,49 +17,65 @@ export default function Messages({
   handleRetry: () => void;
 }) {
   const lastScrollTop = useRef(0);
+  const rafIdRef = useRef(0);
   const containerRef = useRef<HTMLDivElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const [shouldAutoScroll, setShouldAutoScroll] = useState(true);
 
-  const debouncedAutoScroll = debounce(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, 700);
-
-  // Add scroll event listener
+  // User-scroll detection: only disable auto-scroll when user
+  // deliberately scrolls up away from the bottom.
   useEffect(() => {
     const container = containerRef.current;
     if (!container || status !== 'busy') return;
 
     const handleScroll = () => {
       const currentScrollTop = container.scrollTop;
-      const scrollDifference = Math.abs(
-        currentScrollTop - lastScrollTop.current,
-      );
-
-      // Only disable auto-scroll if there's a significant scroll difference
-      // This helps prevent accidental triggers from small scroll movements
-      if (scrollDifference > 10) {
-        setShouldAutoScroll(false);
-      }
-
+      const delta = currentScrollTop - lastScrollTop.current;
       lastScrollTop.current = currentScrollTop;
+
+      const distanceFromBottom =
+        container.scrollHeight - container.scrollTop - container.clientHeight;
+
+      if (delta < -10) {
+        // Scrolled up meaningfully — stop auto-scroll
+        setShouldAutoScroll(false);
+      } else if (distanceFromBottom < 40) {
+        // Back at the bottom — resume
+        setShouldAutoScroll(true);
+      }
     };
 
-    container.addEventListener('scroll', handleScroll);
+    container.addEventListener('scroll', handleScroll, { passive: true });
     return () => container.removeEventListener('scroll', handleScroll);
   }, [status]);
 
-  // Auto-scroll effect
+  // Auto-scroll effect — rAF keeps it in sync with paint, and during
+  // streaming we use 'auto' so each chunk feels continuous rather than
+  // stacking overlapping smooth animations.
   useEffect(() => {
-    if (shouldAutoScroll) {
-      debouncedAutoScroll();
-    }
-  }, [messages, shouldAutoScroll, debouncedAutoScroll]);
+    if (!shouldAutoScroll) return;
+    if (rafIdRef.current) cancelAnimationFrame(rafIdRef.current);
+
+    rafIdRef.current = requestAnimationFrame(() => {
+      rafIdRef.current = 0;
+      const container = containerRef.current;
+      if (!container) return;
+      container.scrollTop = container.scrollHeight;
+    });
+
+    return () => {
+      if (rafIdRef.current) {
+        cancelAnimationFrame(rafIdRef.current);
+        rafIdRef.current = 0;
+      }
+    };
+  }, [messages, shouldAutoScroll]);
 
   useEffect(() => {
     if (status === 'loading') {
       setShouldAutoScroll(true);
+      messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
     }
   }, [status]);
 
