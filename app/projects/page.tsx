@@ -4,7 +4,7 @@ const projects = [
   {
     id: 0,
     title: 'EYB',
-    link: 'https://eyb.com/',
+    link: 'https://eyb.ae/',
     desc: 'Helping businesses get more customers online.',
   },
   {
