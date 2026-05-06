@@ -13,8 +13,8 @@ const experiences = [
   {
     id: 1,
     date: { start: '2024', end: '2025' },
-    title: 'Chikrice, Dubai',
-    desc: 'Founded <a href="https://chikrice.khaled-javdan.com" target="_blank" class="font-bold text-primary hover:underline">ChikRice</a>',
+    title: 'EYB, Dubai',
+    desc: 'Founded <a href="https://eyb.ae" target="_blank" class="font-bold text-primary hover:underline">EYB</a>',
   },
   {
     id: 2,
@@ -91,7 +91,7 @@ export default function Home() {
 
       <ul className="mt-6 flex flex-wrap items-center gap-4 text-sm">
         <li className="hover:underline">
-          <a href="https://github.com/kjavedan" target="_blank">
+          <a href="https://github.com/khaled-javdan" target="_blank">
             GitHub
           </a>
         </li>

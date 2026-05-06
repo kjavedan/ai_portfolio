@@ -201,7 +201,7 @@ export default function MyServices() {
 
       <ul className="mt-6 flex flex-wrap items-center gap-4 text-sm">
         <li className="hover:underline">
-          <a href="https://github.com/kjavedan" target="_blank">
+          <a href="https://github.com/khaled-javdan" target="_blank">
             GitHub
           </a>
         </li>

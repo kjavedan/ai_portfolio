@@ -32,7 +32,7 @@ Full-Stack Software Engineer · Dubai, UAE
 - Email: devkhaledjavdan@gmail.com
 - Phone: +971 50 259 7949
 - LinkedIn: https://www.linkedin.com/in/khaled-javdan/
-- GitHub: https://github.com/kjavedan
+- GitHub: https://github.com/khaled-javdan
 - Portfolio: https://khaled-javdan.com
 - Book a call: https://cal.com/khaled-2wiu0n/30min
 - Languages: English (Fluent), Arabic (Fluent), Persian (Native)

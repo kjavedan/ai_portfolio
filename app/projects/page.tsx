@@ -3,30 +3,42 @@
 const projects = [
   {
     id: 0,
+    title: 'EYB',
+    link: 'https://eyb.com/',
+    desc: 'Helping businesses get more customers online.',
+  },
+  {
+    id: 1,
+    title: 'Streak',
+    link: 'https://streak.eyb.ae/',
+    desc: 'A daily productivity ritual: streaks, focus timer, todos, ideas.',
+  },
+  {
+    id: 2,
     title: 'Resume Maker',
     link: 'https://resume-maker.khaled-javdan.com/',
     desc: 'AI Resume creator/editor',
   },
   {
-    id: 1,
+    id: 3,
     title: 'Cofound',
     link: 'https://dev.cofound.com/',
     desc: 'Ventur Capital Cofounder Help',
   },
   {
-    id: 2,
+    id: 4,
     title: 'ChikRice',
     link: 'https://chikrice.khaled-javdan.com/',
     desc: 'Fitness-focused meal planning web app evolution',
   },
   {
-    id: 3,
+    id: 5,
     title: 'JoJoShop',
     link: 'https://shop.khaled-javdan.com/',
     desc: 'An ecommerce website to learn MERN stack',
   },
   {
-    id: 4,
+    id: 6,
     title: 'First Portfolio',
     link: 'https://khaled-javedan-portfolio.netlify.app/projects',
     desc: 'Bunch of websites to learn HTML, CSS, JavaScript, and React.',

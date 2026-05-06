@@ -16,7 +16,7 @@ const navItems = [
   { href: '/game', label: 'Game' },
   { href: '/blogs', label: 'Blog' },
   { href: '/projects', label: 'Work' },
-  { href: '/my-services', label: 'My Services' },
+  { href: 'https://eyb.ae', label: 'Our Services', external: true },
 ];
 
 export default function Header() {
@@ -87,15 +87,26 @@ export default function Header() {
             >
               {navItems.map((item) => (
                 <motion.li key={item.href} variants={itemVariants}>
-                  <Link
-                    href={item.href}
-                    className={cn(
-                      'hover:underline',
-                      pathname && pathname === item.href && 'text-primary',
-                    )}
-                  >
-                    {item.label}
-                  </Link>
+                  {item.external ? (
+                    <a
+                      href={item.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="hover:underline"
+                    >
+                      {item.label}
+                    </a>
+                  ) : (
+                    <Link
+                      href={item.href}
+                      className={cn(
+                        'hover:underline',
+                        pathname && pathname === item.href && 'text-primary',
+                      )}
+                    >
+                      {item.label}
+                    </Link>
+                  )}
                 </motion.li>
               ))}
             </motion.ul>
